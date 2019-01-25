@@ -35,8 +35,8 @@ poly_mul_asm:
 // Forward NTT
   xor          rax, rax 
   xor          r11, r11 
-  vmovdqa      ymm15, PARAM_Qx4
-  vmovdqa      ymm14, PARAM_QINVx4
+  vmovdqa      ymm15, YMMWORD PTR [PARAM_Qx4+rip]
+  vmovdqa      ymm14, YMMWORD PTR [PARAM_QINVx4+rip]
   vbroadcastss ymm12, DWORD PTR [reg_p3]              // Load twiddle factor W     
   mov          r10, 32                                
 loop_ntt123:
@@ -664,7 +664,7 @@ loop_ntt_intt:
   vperm2i128   ymm4, ymm4, ymm5, 0x31
   vperm2i128   ymm5, ymm6, ymm7, 0x20
   vperm2i128   ymm6, ymm6, ymm7, 0x31  
-  vpsubd       ymm8, ymm12, ymm0                       // temp - a[j+k]
+  vpsubd       ymm8, ymm12, ymm0                      // temp - a[j+k]
   vpsubd       ymm9, ymm1, ymm2
   vpsubd       ymm10, ymm3, ymm4
   vpsubd       ymm11, ymm5, ymm6  
@@ -730,7 +730,7 @@ loop_ntt_intt:
   vpsrlq       ymm6, ymm6, 32   
   
 // Round 5  
-  vbroadcastss ymm7, DWORD PTR [reg_p3+rax+4096+3840]      // Load twiddle factor W
+  vbroadcastss ymm7, DWORD PTR [reg_p3+rax+4096+3840] // Load twiddle factor W
   vpsubd       ymm8, ymm12, ymm3                      // temp - a[j+k]
   vpsubd       ymm9, ymm0, ymm4
   vpsubd       ymm10, ymm1, ymm5
@@ -739,7 +739,7 @@ loop_ntt_intt:
   vpaddd       ymm0, ymm0, ymm4                  
   vpaddd       ymm1, ymm1, ymm5                    
   vpaddd       ymm2, ymm2, ymm6  
-  vmovdqa      ymm13, PARAM_BARRx4                    // Load PARAM_BARR_MULT
+  vmovdqa      ymm13, YMMWORD PTR [PARAM_BARRx4+rip]  // Load PARAM_BARR_MULT
   vpmuldq      ymm3, ymm12, ymm13                     // a[j] = barr_reduce(a[j])
   vpmuldq      ymm4, ymm0, ymm13                    
   vpmuldq      ymm5, ymm1, ymm13                   
@@ -924,7 +924,7 @@ loop_intt7:
     
   xor          rax, rax
   xor          r11, r11
-  vmovdqa      ymm12, PERM_MASK
+  vmovdqa      ymm12, YMMWORD PTR [PERM_MASK+rip]
   mov          r10, 32                               
 loop_intt8910:
 // Round 8
@@ -1027,7 +1027,7 @@ loop_intt8910:
   vpaddq       ymm6, ymm6, ymm9                     
   vpaddq       ymm3, ymm3, ymm10                   
   vpaddq       ymm7, ymm7, ymm11
-  vmovdqa      ymm8, PARAM_Rx4                        // Loading PARAM_R                        
+  vmovdqa      ymm8, YMMWORD PTR [PARAM_Rx4+rip]      // Loading PARAM_R                        
   vpermd       ymm2, ymm12, ymm2
   vpermd       ymm6, ymm12, ymm6
   vpermd       ymm3, ymm12, ymm3

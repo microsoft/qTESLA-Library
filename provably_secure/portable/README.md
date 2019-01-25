@@ -37,7 +37,7 @@ To generate new KAT files, execute:
 ./PQCgenKAT_sign-SET
 ```
 
-Using DEBUG=TRUE generates statistics on acceptance rates and timings for internal functions.  
+Using `DEBUG=TRUE` generates statistics on acceptance rates and timings for internal functions.  
 
 ## Windows
 

@@ -16,7 +16,7 @@ which by default sets `ARCH=x64`, `CC=gcc` and `DEBUG=FALSE`, or do:
 make CC=[gcc/clang] DEBUG=[TRUE/FALSE]
 ```
 
-The following executables are generated: `test\_qtesla-SET`, `PQCtestKAT\_sign-SET` and `PQCgenKAT\_sign-SET`,
+The following executables are generated: `test_qtesla-SET`, `PQCtestKAT_sign-SET` and `PQCgenKAT_sign-SET`,
 where `SET = [I / III-speed / III-size]` represents one of the available parameter sets.
 
 To get cycle counts for key generation, signing and verification, execute:

@@ -1,35 +1,46 @@
-# qTESLA library: an efficient software implementation of the post-quantum signature scheme qTESLA in portable C.
-# Includes support for the provably-secure parameter sets qTESLA-p-I and qTESLA-p-III.
+## qTESLA library: implementation in portable C
 
-# Linux
+Includes support for the provably-secure parameter sets qTESLA-p-I and qTESLA-p-III.
+
+## Linux
 
 To compile, do:
 
+```sh
 make 
+```
 
-which by default sets ARCH=x64, CC=gcc and DEBUG=FALSE, or do:
+which by default sets `ARCH=x64`, `CC=gcc` and `DEBUG=FALSE`, or do:
 
+```sh
 make ARCH=[x64/x86/ARM/ARM64] CC=[gcc/clang] DEBUG=[TRUE/FALSE]
+```
 
-The following executables are generated: "test\_qtesla-SET", "PQCtestKAT\_sign-SET" and "PQCgenKAT\_sign-SET",
-where SET = [p-I / p-III] represents one of the available parameter sets.
+The following executables are generated: `test\_qtesla-SET`, `PQCtestKAT\_sign-SET` and `PQCgenKAT\_sign-SET`,
+where `SET = [p-I / p-III]` represents one of the available parameter sets.
 
 To get cycle counts for key generation, signing and verification, execute:
 
-./test\_qtesla-SET
+```sh
+./test_qtesla-SET
+```
 
 To test against known answer values in the KAT folder, execute:
 
-./PQCtestKAT\_sign-SET
+```sh
+./PQCtestKAT_sign-SET
+```
 
 To generate new KAT files, execute:
 
-./PQCgenKAT\_sign-SET
+```sh
+./PQCgenKAT_sign-SET
+```
 
 Using DEBUG=TRUE generates statistics on acceptance rates and timings for internal functions.  
 
-# Windows
+## Windows
 
-Open the solution file "Visual Studio\qTESLA.sln" in Visual Studio 2015 and build for one of the available 
-configurations (combinations of Release\Debug and x64\x86). This creates a few executables named "test-qTESLA-SET.exe".
+Open the solution file `Visual Studio\qTESLA.sln` in Visual Studio 2015 and build for one of the available 
+configurations (combinations of Release\Debug and x64\x86). This creates a few executables named `test-qTESLA-SET.exe`.
 

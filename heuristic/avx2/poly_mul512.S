@@ -35,8 +35,8 @@ poly_mul_asm:
 // Forward NTT
   xor          rax, rax 
   xor          r11, r11 
-  vmovdqa      ymm15, PARAM_Qx4
-  vmovdqa      ymm14, PARAM_QINVx4
+  vmovdqa      ymm15, YMMWORD PTR [PARAM_Qx4+rip]
+  vmovdqa      ymm14, YMMWORD PTR [PARAM_QINVx4+rip]
   vbroadcastss ymm12, DWORD PTR [reg_p3]              // Load twiddle factor W     
   mov          r10, 16                                
 loop_ntt123:
@@ -598,7 +598,7 @@ loop_ntt_intt:
   vperm2i128   ymm4, ymm4, ymm5, 0x31
   vperm2i128   ymm5, ymm6, ymm7, 0x20
   vperm2i128   ymm6, ymm6, ymm7, 0x31  
-  vpsubd       ymm8, ymm12, ymm0                       // temp - a[j+k]
+  vpsubd       ymm8, ymm12, ymm0                      // temp - a[j+k]
   vpsubd       ymm9, ymm1, ymm2
   vpsubd       ymm10, ymm3, ymm4
   vpsubd       ymm11, ymm5, ymm6  
@@ -774,7 +774,7 @@ loop_intt6:
     
   xor          rax, rax
   xor          r11, r11
-  vmovdqa      ymm12, PERM_MASK
+  vmovdqa      ymm12, YMMWORD PTR [PERM_MASK+rip]
   mov          r10, 16                               
 loop_intt789:
 // Round 7
@@ -877,7 +877,7 @@ loop_intt789:
   vpaddq       ymm6, ymm6, ymm9                     
   vpaddq       ymm3, ymm3, ymm10                   
   vpaddq       ymm7, ymm7, ymm11
-  vmovdqa      ymm8, PARAM_Rx4                        // Loading PARAM_R                        
+  vmovdqa      ymm8, YMMWORD PTR [PARAM_Rx4+rip]      // Loading PARAM_R                        
   vpermd       ymm2, ymm12, ymm2
   vpermd       ymm6, ymm12, ymm6
   vpermd       ymm3, ymm12, ymm3

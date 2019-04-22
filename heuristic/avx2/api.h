@@ -10,10 +10,10 @@
 
 #if defined(_qTESLA_I_)
   #define CRYPTO_ALGNAME "qTesla-I"
-#elif defined(_qTESLA_III_speed_)
-  #define CRYPTO_ALGNAME "qTesla-III-speed"
-#elif defined(_qTESLA_III_size_)
-  #define CRYPTO_ALGNAME "qTesla-III-size"
+#elif defined(_qTESLA_III_)
+  #define CRYPTO_ALGNAME "qTesla-III"
+#elif defined(_qTESLA_V_)
+  #define CRYPTO_ALGNAME "qTesla-V"
 #endif
 
 #define CRYPTO_RANDOMBYTES 32
@@ -22,7 +22,7 @@
 #define HM_BYTES 64
 
 // Contains signature (z,c). z is a polynomial bounded by B, c is the output of a hashed string
-#define CRYPTO_BYTES ((PARAM_N*PARAM_D+7)/8 + CRYPTO_C_BYTES)
+#define CRYPTO_BYTES ((PARAM_N*(PARAM_B_BITS+1)+7)/8 + CRYPTO_C_BYTES)
 // Contains polynomial s and e, and seeds seed_a and seed_y
 #define CRYPTO_SECRETKEYBYTES (2*PARAM_S_BITS*PARAM_N/8 + 2*CRYPTO_SEEDBYTES)
 // Contains seed_a and polynomial t

@@ -31,8 +31,8 @@
   push         r14 
   push         r15  
   sub          rsp, 2
-  mov          r15, H                     // Loading PARAM_H 
-  vmovdqa      ymm0, ZEROS 
+  mov          r15, QWORD PTR [H+rip]     // Loading PARAM_H 
+  vmovdqa      ymm0, YMMWORD PTR [ZEROS+rip] 
   xor          rax, rax
 first_loop:
   vmovdqa      YMMWORD PTR [reg_p1+rax], ymm0
@@ -40,7 +40,7 @@ first_loop:
   vmovdqa      YMMWORD PTR [reg_p1+rax+64], ymm0
   vmovdqa      YMMWORD PTR [reg_p1+rax+96], ymm0
   add          rax, 128
-  cmp          rax, Nx4
+  cmp          rax, [Nx4+rip]
   jne          first_loop
 
 outer_loop:
@@ -49,7 +49,7 @@ outer_loop:
   xor          r9, r9
   mov          r8d, DWORD PTR [reg_p3]    // pos
   mov          r10w, WORD PTR [reg_p4]    // sign
-  mov          rax, N
+  mov          rax, [N+rip]
   sub          rax, r8                    // N-pos
   shl          rax, 1                     // #bytes(N-pos)
   sar          r10w, 15                   // First mask:  1 -> 0...000, -1 -> 1...111
@@ -120,7 +120,7 @@ serial_loop1:
 
 stage2:
   xor          rax, rax
-  mov          r8, N
+  mov          r8, [N+rip]
   sub          r8d, DWORD PTR [reg_p3]    // N-pos
     
 // Parallel section 
@@ -188,8 +188,8 @@ out:
   dec          r15
   jnz          outer_loop
   
-  mov          rax, N2m64
-  mov          r9, N4m128
+  mov          rax, [N2m64+rip]
+  mov          r9, [N4m128+rip]
 final_loop:
   vmovdqa      xmm0, XMMWORD PTR [reg_p1+rax]  
   vmovdqa      xmm1, XMMWORD PTR [reg_p1+rax+16]  

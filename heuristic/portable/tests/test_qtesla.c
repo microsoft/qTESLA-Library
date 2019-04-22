@@ -13,6 +13,7 @@
 #include "../pack.h"
 #include "../sample.h"
 #include "../params.h"
+#include "../gauss.h"
 #include "../sha3/fips202.h"
   
 #if (OS_TARGET == OS_LINUX)
@@ -154,6 +155,17 @@ void test_functions()
   }
   print_results("GaussSampler: ", cycles0, NRUNS);
 
+	nonce = 0;
+  for (i = 0; i < NRUNS; i++) {
+    cycles0[i] = cpucycles();
+    gassian_poly_sampler(s, randomness, nonce++);     
+    cycles0[i] = cpucycles() - cycles0[i];
+  }
+  print_results("GaussSampler1: ", cycles0, NRUNS);
+  for(i=0;i<PARAM_N;i++)
+		printf("%d:%d ",e[i],s[i]);
+	printf("\n");
+
   for (i = 0; i < NRUNS; i++) {
     cycles0[i] = cpucycles();
     poly_uniform(a, randomness);
@@ -171,7 +183,7 @@ void test_functions()
   
   for (i = 0; i < NRUNS; i++) {
     cycles0[i] = cpucycles();
-    hash_vm(c, v, hm);
+    hash_H(c, v, hm);
     cycles0[i] = cpucycles() - cycles0[i];
   }
   print_results("H: ", cycles0, NRUNS);

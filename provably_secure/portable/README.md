@@ -43,3 +43,4 @@ Using `DEBUG=TRUE` generates statistics on acceptance rates and timings for inte
 
 Open the solution file `Visual Studio\qTESLA.sln` in Visual Studio 2015 and build for one of the available 
 configurations (combinations of Release\Debug and x64\x86). This creates a few executables named `test-qTESLA-SET.exe`.
+

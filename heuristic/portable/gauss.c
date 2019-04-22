@@ -75,11 +75,40 @@
     #define MINMAX4(swap, diff, a_u, a_v) MINMAX3(swap, diff, a_u, a_v)
 #endif
 
-#if CDT_COLS <= 5
-    // TODO: improve MINIMAX performance:
+#if CDT_COLS > 5
+    #define MINMAX5(swap, diff, a_u, a_v) { \
+        PRODIFF(diff, a_u, a_v, 5); \
+        MINMAX4(swap, diff, a_u, a_v); \
+        PROSWAP(swap, diff, a_u, a_v, 5); \
+    }
+#else
+    #define MINMAX5(swap, diff, a_u, a_v) MINMAX4(swap, diff, a_u, a_v)
+#endif
+
+#if CDT_COLS > 6
+    #define MINMAX6(swap, diff, a_u, a_v) { \
+        PRODIFF(diff, a_u, a_v, 6); \
+        MINMAX5(swap, diff, a_u, a_v); \
+        PROSWAP(swap, diff, a_u, a_v, 6); \
+    }
+#else
+    #define MINMAX6(swap, diff, a_u, a_v) MINMAX5(swap, diff, a_u, a_v)
+#endif
+
+#if CDT_COLS > 7
+    #define MINMAX7(swap, diff, a_u, a_v) { \
+        PRODIFF(diff, a_u, a_v, 7); \
+        MINMAX6(swap, diff, a_u, a_v); \
+        PROSWAP(swap, diff, a_u, a_v, 7); \
+    }
+#else
+    #define MINMAX7(swap, diff, a_u, a_v) MINMAX6(swap, diff, a_u, a_v)
+#endif
+
+#if CDT_COLS <= 8
     #define MINIMAX(a_u, a_v, g_u, g_v) { \
         sdigit_t diff = 0, swapa; int32_t swapg; \
-        MINMAX4(swapa, diff, a_u, a_v); \
+        MINMAX7(swapa, diff, a_u, a_v); \
         PROSWAPG(swapg, diff, g_u, g_v); \
     }
 #else
@@ -94,25 +123,25 @@
  * @param    g      the accompanying sampling order array to sort together.
  * @param    n      the array size.
  */
-static void knuthMergeExchangeKG(sdigit_t a[/*n*CDT_COLS*/], int32_t g[/*n*/], unsigned int n) 
+static void knuthMergeExchangeKG(sdigit_t a[/*n*CDT_COLS*/], int32_t g[/*n*/], size_t n) 
 {
-    unsigned int t = 1;      
+    size_t t = 1;      
     while (t < n - t) {
         t += t;
     }
-    for (unsigned int p = t; p > 0; p >>= 1) {
+    for (size_t p = t; p > 0; p >>= 1) {
         sdigit_t *ap = a + p*CDT_COLS;
         sdigit_t *a_i = a, *ap_i = ap;
         int32_t *gp = g + p;
-        for (unsigned int i = 0; i < (unsigned int)(n - p); i++, a_i += CDT_COLS, ap_i += CDT_COLS) {
+        for (size_t i = 0; i < n - p; i++, a_i += CDT_COLS, ap_i += CDT_COLS) {
             if (!(i & p)) {
                 MINIMAX(a_i, ap_i, g[i], gp[i]);
             }
         }
-        for (unsigned int q = t; q > p; q >>= 1) {
+        for (size_t q = t; q > p; q >>= 1) {
             sdigit_t *ap_i = ap, *aq_i = a + q*CDT_COLS;
             int32_t *gq = g + q;
-            for (unsigned int i = 0; i < (unsigned int)(n - q); i++, ap_i += CDT_COLS, aq_i += CDT_COLS) {
+            for (size_t i = 0; i < n - q; i++, ap_i += CDT_COLS, aq_i += CDT_COLS) {
                 if (!(i & p)) {
                     MINIMAX(ap_i, aq_i, gp[i], gq[i]);
                 }
@@ -134,10 +163,8 @@ static void knuthMergeExchangeKG(sdigit_t a[/*n*CDT_COLS*/], int32_t g[/*n*/], u
  * @param    a      the sampling order array to sort in-place.
  * @param    n      the array size.
  */
-static void knuthMergeExchangeG(int32_t a[/*n*/], size_t n) {
-    if (n <= 1) {
-        return;
-    }
+static void knuthMergeExchangeG(int32_t a[/*n*/], size_t n) 
+{
     size_t t = 1;
     while (t < n - t) {
         t += t;
@@ -207,4 +234,27 @@ void sample_gauss_poly(poly z, const unsigned char *seed, int nonce)
     for (int chunk = 0; chunk < PARAM_N; chunk += CHUNK_SIZE) {
         kmxGauss(z + chunk, seed, dmsp++);
     }
+}
+void gassian_poly_sampler(poly z, const unsigned char *seed, int nonce)
+{
+	int dmsp = nonce<<8;
+	int i,j,k,sign;
+  sdigit_t samp[CHUNK_SIZE*CDT_COLS],c[CDT_COLS],b;
+  
+	for(int chunk=0; chunk<PARAM_N; chunk+=CHUNK_SIZE){
+		cSHAKE((uint8_t *)samp, CHUNK_SIZE*CDT_COLS*sizeof(sdigit_t), (int16_t)dmsp++, seed, CRYPTO_RANDOMBYTES);
+		for(i=0;i<CHUNK_SIZE;i++){
+			z[chunk+i] = 0;
+			for(j=1;j<CDT_ROWS;j++){
+				b = 0;
+				for(k=CDT_COLS-1;k>=0;k--){
+					sign = samp[i*CDT_COLS+k]>>63; 
+					c[k] = (samp[i*CDT_COLS+k]&0x7FFFFFFFFFFFFFFFLL)-(cdt_v[j*CDT_COLS+k]+b);
+					b = c[k]>>63;
+				}
+				z[chunk+i] += ~b&1;
+			}
+			z[chunk+i] = (sign&(-z[chunk+i])|(~sign&z[chunk+i]));
+		}
+	}
 }

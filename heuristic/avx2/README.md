@@ -1,6 +1,6 @@
 ## qTESLA library: AVX2-optimized implementation for x64 platforms on Linux
 
-Includes support for the heuristic parameter sets qTESLA-I, qTESLA-III-speed, and qTESLA-III-size.
+Includes support for the heuristic parameter sets qTESLA-I, qTESLA-III and qTESLA-V.
 
 ## Linux
 
@@ -17,7 +17,7 @@ make CC=[gcc/clang] DEBUG=[TRUE/FALSE]
 ```
 
 The following executables are generated: `test_qtesla-SET`, `PQCtestKAT_sign-SET` and `PQCgenKAT_sign-SET`,
-where `SET = [I / III-speed / III-size]` represents one of the available parameter sets.
+where `SET = [I / III / V]` represents one of the available parameter sets.
 
 To get cycle counts for key generation, signing and verification, execute:
 

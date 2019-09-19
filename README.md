@@ -1,29 +1,19 @@
 
-# qTESLA library v1.0 (C Edition)
+# qTESLA library v0.1 (C Edition)
 
-**qTESLA** is a software library written in the C language that contains optimized implementations of the lattice-based digital signature scheme qTESLA [1]. 
+**qTESLA** is a software library written in the C language that contains implementations of the lattice-based digital signature scheme qTESLA [1].
 
-qTESLA is a family of high-performance signature schemes based on the hardness of the decisional ring learning with errors (R-LWE) problem that is conjectured to be secure against quantum computer attacks. qTESLA comes in two variants: (i) **heuristic qTESLA**, which involves a heuristic parameter generation, and is intended for embedded and high-performance applications; and (ii) **provably-secure qTESLA**, which involves a provably-secure parameter generation according to existing security reductions, and is intended for high-sensitive applications.
-
-Concretely, the qTESLA library includes the following heuristic qTESLA schemes:
-
-* qTESLA-I: matching the post-quantum security of AES128.
-* qTESLA-III-speed: matching the post-quantum security of AES192 (option for speed).
-* qTESLA-III-size: matching the post-quantum security of AES192 (option for size).
-
-And the following provably-secure qTESLA schemes:
+Concretely, the qTESLA library includes the following provably-secure qTESLA schemes:
 
 * qTESLA-p-I: matching the post-quantum security of AES128.
 * qTESLA-p-III: matching the post-quantum security of AES192.
 
-The library was developed by [Microsoft Research](http://research.microsoft.com/) using as basis the [`qTESLA implementation`](https://github.com/qtesla/qTesla) developed by the qTESLA team and submitted to NIST's Post-Quantum Cryptography Standardization process [2].
+The library was developed by [Microsoft Research](http://research.microsoft.com/) using as basis the [`qTESLA implementation`](https://github.com/qtesla/qTesla) developed by the qTESLA team and submitted to NIST's Post-Quantum Cryptography Standardization process [1].
 
 ## Contents
 
 Available implementations:
 
-* [`Portable implementation for heuristic qTESLA`](heuristic/portable/): portable implementation of heuristic qTESLA for 32-bit and 64-bit platforms. 
-* [`AVX2-optimized implementation for heuristic qTESLA`](heuristic/avx2/): optimized implementation of heuristic qTESLA for x64 platforms using AVX2 instructions.
 * [`Portable implementation for provably-secure qTESLA`](provably_secure/portable/): portable implementation of provably-secure qTESLA for 32-bit and 64-bit platforms. 
 
 Each of the implementation folders above contains:
@@ -48,12 +38,11 @@ Other files:
 - Protected against timing and cache-timing attacks through regular, constant-time implementation of 
   all operations on secret key material.
 - Support for Windows OS using Microsoft Visual Studio and Linux OS using GNU GCC and clang.     
-- Includes portable-C implementations with support for a wide range of platforms including x64, x86 and ARM. 
-- Includes AVX2-optimized implementations for x64 platforms running Linux. 
+- Includes portable-C implementations with support for a wide range of platforms including x64, x86 and ARM.
 
 ## Supported Platforms
 
-**qTESLA v1.0** is supported on a wide range of platforms including x64, x86 and ARM devices running Windows 
+**qTESLA v0.1** is supported on a wide range of platforms including x64, x86 and ARM devices running Windows 
 or Linux OS. We have tested the library with Microsoft Visual Studio 2015, GNU GCC v7.2, and clang v3.8.
 See instructions below to choose an implementation option and compile on one of the supported platforms.
 
@@ -77,10 +66,7 @@ It includes some third party modules that are licensed differently. In particula
 
 # References
 
-[1]  Erdem Alkim, Paulo S. L. M. Barreto, Nina Bindel, Patrick Longa, and Jefferson E. Ricardini. The lattice-based digital signature scheme qTESLA. 
-The preprint version is available [`here`](http://eprint.iacr.org/2016/963). 
-
-[2]  Nina Bindel, Sedat Akleylek, Erdem Alkim, Paulo S. L. M. Barreto, Johannes Buchmann, Edward Eaton, Gus Gutoski, Juliane Kramer, Patrick Longa, Harun Polat, Jefferson E. Ricardini, and Gustavo Zanon. Submission to NIST’s post-quantum standardization project: lattice-based digital signature scheme qTESLA. https://qtesla.org/   
+[1]  Nina Bindel, Sedat Akleylek, Erdem Alkim, Paulo S. L. M. Barreto, Johannes Buchmann, Edward Eaton, Gus Gutoski, Juliane Kramer, Patrick Longa, Harun Polat, Jefferson E. Ricardini, and Gustavo Zanon. Submission to NISTâ€™s post-quantum standardization project: lattice-based digital signature scheme qTESLA. https://qtesla.org/   
 
 # Contributing
 

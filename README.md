@@ -1,7 +1,7 @@
 
 # qTESLA library v0.1 (C Edition)
 
-**qTESLA** is a software library written in the C language that contains implementations of the lattice-based digital signature scheme qTESLA [1].
+**qTESLA** is a software library written in the C language that contains efficient implementations of the lattice-based digital signature scheme qTESLA [1].
 
 Concretely, the qTESLA library includes the following provably-secure qTESLA schemes:
 
@@ -14,6 +14,7 @@ The library was developed by [Microsoft Research](http://research.microsoft.com/
 
 Available implementations:
 
+* [`AVX2-optimized implementation for provably-secure qTESLA`](provably_secure/avx2/): optimized implementation of provably-secure qTESLA for x64 platforms using AVX2 instructions.
 * [`Portable implementation for provably-secure qTESLA`](provably_secure/portable/): portable implementation of provably-secure qTESLA for 32-bit and 64-bit platforms. 
 
 Each of the implementation folders above contains:
@@ -39,6 +40,7 @@ Other files:
   all operations on secret key material.
 - Support for Windows OS using Microsoft Visual Studio and Linux OS using GNU GCC and clang.     
 - Includes portable-C implementations with support for a wide range of platforms including x64, x86 and ARM.
+- Includes AVX2-optimized implementations for x64 platforms running Linux.
 
 ## Supported Platforms
 

@@ -7,7 +7,7 @@
 
 typedef int32_t poly[PARAM_N]     __attribute__((aligned(32)));
 typedef int32_t poly2x[2*PARAM_N] __attribute__((aligned(32)));
-typedef	int32_t poly_k[PARAM_N*PARAM_K];
+typedef	int32_t poly_k[PARAM_N*PARAM_K] __attribute__((aligned(32)));
 
 int32_t reduce(int64_t a);
 int32_t barr_reduce(int32_t a);

@@ -4,6 +4,7 @@
 * Abstract: testing and benchmarking code
 **************************************************************************************/
 
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "../random/random.h"
@@ -67,7 +68,7 @@ static void print_results(const char *s, unsigned long long *t, size_t tlen)
 
 unsigned char mi[MLEN];
 unsigned char mo[MLEN+CRYPTO_BYTES];
-unsigned char sm[MLEN+CRYPTO_BYTES];
+unsigned char sm[MLEN+CRYPTO_BYTES], sm_t[MLEN+CRYPTO_BYTES];
 unsigned char pk[CRYPTO_PUBLICKEYBYTES];
 unsigned char sk[CRYPTO_SECRETKEYBYTES];
 unsigned long long smlen, mlen;
@@ -325,10 +326,20 @@ int main(void)
 
     // Change something in the signature somewhere    
     randombytes(&r, 1);
-    sm[r % (MLEN+CRYPTO_BYTES)] ^= 1;
-    response = crypto_sign_open(mo, &mlen, sm, smlen, pk);
+    memcpy(sm_t, sm, MLEN+CRYPTO_BYTES);
+    sm_t[r % (MLEN+CRYPTO_BYTES)] ^= 1;
+    response = crypto_sign_open(mo, &mlen, sm_t, smlen, pk);
     if (response == 0) {
       printf("Corrupted signature VERIFIED. \n");
+      return -1;
+    }
+
+    // Change something in the public key somewhere    
+    randombytes(&r, 1);
+    pk[r % (MLEN+CRYPTO_BYTES)] ^= 1;
+    response = crypto_sign_open(mo, &mlen, sm, smlen, pk);
+    if (response == 0) {
+      printf("Corrupted public key used to VERIFY signature. \n");
       return -1;
     }
   }

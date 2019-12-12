@@ -79,7 +79,7 @@ It includes some third party modules that are licensed differently. In particula
 [1]  Erdem Alkim, Paulo S. L. M. Barreto, Nina Bindel, Juliane Kramer, Patrick Longa, and Jefferson E. Ricardini. The lattice-based digital signature scheme qTESLA. 
 The preprint version is available [`here`](http://eprint.iacr.org/2016/963). 
 
-[2]  Nina Bindel, Sedat Akleylek, Erdem Alkim, Paulo S. L. M. Barreto, Johannes Buchmann, Edward Eaton, Gus Gutoski, Juliane Kramer, Patrick Longa, Harun Polat, Jefferson E. Ricardini, and Gustavo Zanon. Submission to NIST�s post-quantum standardization project: lattice-based digital signature scheme qTESLA. https://qtesla.org/   
+[2]  Nina Bindel, Sedat Akleylek, Erdem Alkim, Paulo S. L. M. Barreto, Johannes Buchmann, Edward Eaton, Gus Gutoski, Juliane Kramer, Patrick Longa, Harun Polat, Jefferson E. Ricardini, and Gustavo Zanon. Submission to NIST's post-quantum standardization project: lattice-based digital signature scheme qTESLA. https://qtesla.org/   
 
 # Contributing
 

@@ -3,15 +3,9 @@
 
 **qTESLA** is a software library written in the C language that contains efficient and compact implementations of the lattice-based digital signature scheme qTESLA [1]. 
 
-qTESLA is a family of high-performance signature schemes based on the hardness of the decisional ring learning with errors (R-LWE) problem that is conjectured to be secure against quantum computer attacks. qTESLA comes in two variants: (i) **heuristic qTESLA**, which involves a heuristic parameter generation, and is intended for embedded and high-performance applications; and (ii) **provably-secure qTESLA**, which involves a provably-secure parameter generation according to existing security reductions, and is intended for high-sensitive applications.
+qTESLA is a family of provably-secure signature schemes based on the hardness of the decisional ring learning with errors (R-LWE) problem that is conjectured to be secure against quantum computer attacks.
 
-Concretely, the qTESLA library includes the following heuristic qTESLA schemes:
-
-* qTESLA-I: matching the post-quantum security of AES128.
-* qTESLA-II: matching the post-quantum security of SHA3-256.
-* qTESLA-III: matching the post-quantum security of AES192.
-
-And the following provably-secure qTESLA schemes:
+Concretely, the qTESLA library includes the following provably-secure qTESLA schemes:
 
 * qTESLA-p-I: matching the post-quantum security of AES128.
 * qTESLA-p-III: matching the post-quantum security of AES192.
@@ -22,8 +16,6 @@ The library was developed by [Microsoft Research](http://research.microsoft.com/
 
 Available implementations:
 
-* [`Portable implementation for heuristic qTESLA`](heuristic/portable/): portable implementation of heuristic qTESLA for 32-bit and 64-bit platforms. 
-* [`AVX2-optimized implementation for heuristic qTESLA`](heuristic/avx2/): optimized implementation of heuristic qTESLA for x64 platforms using AVX2 instructions.
 * [`Portable implementation for provably-secure qTESLA`](provably_secure/portable/): portable implementation of provably-secure qTESLA for 32-bit and 64-bit platforms. 
 * [`AVX2-optimized implementation for provably-secure qTESLA`](provably_secure/avx2/): optimized implementation of provably-secure qTESLA for x64 platforms using AVX2 instructions.
 
@@ -33,7 +25,7 @@ Each of the implementation folders above contains:
 * random folder: randombytes function using the system random number generator.
 * sha3 folder: implementation of SHAKE and cSHAKE.  
 * tests folder: test files for KATs, functionality and benchmarking.  
-* Visual Studio folder (portable implementations): Visual Studio 2015 files for compilation in Windows.
+* Visual Studio folder (portable implementation): Visual Studio 2015 files for compilation in Windows.
 * Makefile: Makefile for compilation using the GNU GCC or clang compilers on Linux. 
 * README.md: readme file for each implementation.
 * Source and header files.
@@ -45,7 +37,7 @@ Other files:
 
 ## Main Features
 
-- Supports three security levels matching the post-quantum security of AES128, SHA3-256 and AES192.
+- Supports two security levels matching the post-quantum security of AES128 and AES192.
 - Protected against timing and cache-timing attacks through regular, constant-time implementation of 
   all operations on secret key material.
 - Protected against some simple but powerful fault attacks; see [1] for more details.
@@ -55,8 +47,6 @@ Other files:
 
 ## New Features in v1.0
 
-- Adds support for three heuristic parameters sets called qTESLA-I, qTESLA-II and qTESLA-III, whose hardness is based 
-  on the R-LWE and ST-R-SIS problems; see [1] for more details.
 - The hash of the public key is included during the signature computation to protect against Key Duplication (KS)
   attacks; see [1] for more details. 
 
